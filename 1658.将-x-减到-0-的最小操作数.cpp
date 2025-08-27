@@ -12,7 +12,7 @@ public:
 
         int length = 0;
         long long total = accumulate(nums.begin(), nums.end(), 0), sum = 0, target = total - x;
-        if (target == 0) return n; // TODO ???
+        if (target == 0) return n;
         for (int left = 0, right = 0; right < n; left++) {
             right = max(left, right);
             while(right < n && sum + nums[right] <= target) {
