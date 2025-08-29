@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=35 lang=cpp
+ * @lc app=leetcode.cn id=704 lang=cpp
  *
- * [35] 搜索插入位置
+ * [704] 二分查找
  */
 
 // @lc code=start
@@ -10,8 +10,8 @@ public:
     int binarySearch(vector<int>& nums, int target) {
         int n = nums.size(), left = 0, right = n - 1;
         while (left <= right) {
-            int mid = left + ((right - left) >> 1);
-            if (nums[mid] >= target)  {
+            int mid = left + ((right - left) >> 2);
+            if (nums[mid] >= target) {
                 right = mid - 1;
             } else {
                 left = mid + 1;
@@ -21,8 +21,13 @@ public:
         return left;
     }
 
-    int searchInsert(vector<int>& nums, int target) {
-        return binarySearch(nums, target);
+    int search(vector<int>& nums, int target) {
+        int pos = binarySearch(nums, target);
+        if (pos == nums.size() || nums[pos] != target) {
+            return -1;
+        }
+
+        return pos;
     }
 };
 // @lc code=end
