@@ -8,11 +8,12 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int minPrice = INT_MAX, ans = 0;
-        for (int n: prices) {
-            ans = max(ans, n - minPrice);
-            minPrice = min(minPrice, n);
+        int ans = 0, minPrice = INT_MAX;
+        for (int price: prices) {
+            ans = max(ans, price - minPrice);
+            minPrice = min(minPrice, price);
         }
+
         return ans;
     }
 };

@@ -10,16 +10,16 @@ using namespace std;
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> mp;
-        for(int i = 0; i < nums.size(); i++) {
-            if (mp.count(target - nums[i])) {
-                return {mp[target - nums[i]], i};
+        unordered_map<int, int> idx;
+        for (int i = 0; i < nums.size(); i++) {
+            if (idx.count(target - nums[i])) {
+                return {idx[target - nums[i]], i};
             }
-            mp[nums[i]] = i;
+            idx[nums[i]] = i;
         }
-        return {};
-    }
 
+        return {0, 0};
+    }
 };
 // @lc code=end
 
