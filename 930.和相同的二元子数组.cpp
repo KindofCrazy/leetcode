@@ -7,29 +7,43 @@
 // @lc code=start
 class Solution {
 public:
-    int solve (vector<int>& nums, int goal) {
-        int n = nums.size();
+    // int solve (vector<int>& nums, int goal) {
+    //     int n = nums.size();
         
-        int ans = 0, sum = 0;
-        for (int left = 0, right = 0; left < n; left++) {
-            right = max(left, right);
-            while (right < n && sum < goal) {
-                sum += nums[right++];
-            }
+    //     int ans = 0, sum = 0;
+    //     for (int left = 0, right = 0; left < n; left++) {
+    //         right = max(left, right);
+    //         while (right < n && sum < goal) {
+    //             sum += nums[right++];
+    //         }
 
-            if (sum >= goal && right > left) ans += (n - right + 1);
-            else if (sum >= goal && right == left) ans += (n - right);
-            /* Handle when goal == 0 */
-            if (right > left) sum -= nums[left];
+    //         if (sum >= goal && right > left) ans += (n - right + 1);
+    //         else if (sum >= goal && right == left) ans += (n - right);
+    //         /* Handle when goal == 0 */
+    //         if (right > left) sum -= nums[left];
+    //     }
+
+    //     return ans;
+    // }
+
+
+    // int numSubarraysWithSum(vector<int>& nums, int goal) {
+    //     return solve(nums, goal) - solve(nums, goal+1);
+    // }
+
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        unordered_map<int, int> cnt;
+        int ans = 0, sum = 0;
+        cnt[0] = 1;
+        for (int n: nums) {
+            sum += n;
+            ans += cnt[sum - goal];
+            cnt[sum]++;
         }
 
         return ans;
     }
 
-
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-        return solve(nums, goal) - solve(nums, goal+1);
-    }
 };
 // @lc code=end
 

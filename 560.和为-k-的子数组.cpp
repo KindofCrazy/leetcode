@@ -15,7 +15,7 @@ public:
         mp[0] = 1;
         for (int i = 0; i < n; i++) {
             prefix += nums[i];
-            ans += mp[prefix - k];
+            ans += mp.contains(prefix - k) ? mp[prefix - k]: 0;
             mp[prefix]++;
         }
         return ans;
