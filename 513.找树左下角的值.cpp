@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=513 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [513] 找树左下角的值
  */
 
 // @lc code=start
@@ -18,26 +18,21 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (root == nullptr) return {};
-
+    int findBottomLeftValue(TreeNode* root) {
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        int ans;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
+            ans = q.front()->val;
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
-
-            ans.emplace_back(vals);
         }
 
         return ans;

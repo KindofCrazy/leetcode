@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=107 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [107] 二叉树的层序遍历 II
  */
 
 // @lc code=start
@@ -18,7 +18,7 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
         if (root == nullptr) return {};
 
         queue<TreeNode*> q;
@@ -40,6 +40,7 @@ public:
             ans.emplace_back(vals);
         }
 
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };

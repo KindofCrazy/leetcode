@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=623 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [623] 在二叉树中增加一行
  */
 
 // @lc code=start
@@ -18,29 +18,41 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (root == nullptr) return {};
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        if (depth == 1) {
+            TreeNode* node = new TreeNode(val);
+            node->left = root;
+            return node;
+        }
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
 
+        int dep = 1;
         q.push(root);
+
         while (!q.empty()) {
-            vector<int> vals;
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+
+                if (dep == depth - 1) {
+                    TreeNode* l = new TreeNode(val), *r = new TreeNode(val);
+                    l->left = node->left;
+                    r->right = node->right;
+
+                    node->left = l;
+                    node->right = r;
+                }
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            dep++;
         }
 
-        return ans;
+        return root;
     }
 };
 // @lc code=end

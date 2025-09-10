@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=103 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [103] 二叉树的锯齿形层序遍历
  */
 
 // @lc code=start
@@ -18,26 +18,33 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         if (root == nullptr) return {};
 
         queue<TreeNode*> q;
         vector<vector<int>> ans;
 
+        bool isLeft = true;
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            deque<int> level;
+            int sz = q.size();
+            while (sz--) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+
+                if (isLeft) {
+                    level.push_back(node->val);
+                } else {
+                    level.push_front(node->val);
+                }
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            isLeft = !isLeft;
+            ans.emplace_back(vector<int>{level.begin(), level.end()});
         }
 
         return ans;

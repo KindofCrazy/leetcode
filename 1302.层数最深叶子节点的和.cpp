@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=1302 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [1302] 层数最深叶子节点的和
  */
 
 // @lc code=start
@@ -18,26 +18,26 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (root == nullptr) return {};
+    int deepestLeavesSum(TreeNode* root) {
+        if (root == nullptr) return 0;
 
+        int ans = 0;
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            ans = 0;
+            int sz = q.size();
+
+            for (int i = 0; i < sz; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+
+                ans += node->val;
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
-
-            ans.emplace_back(vals);
         }
 
         return ans;

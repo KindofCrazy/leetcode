@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=1161 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [1161] 最大层内元素和
  */
 
 // @lc code=start
@@ -18,26 +18,30 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+    int maxLevelSum(TreeNode* root) {
         if (root == nullptr) return {};
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        int ans;
+        int mxsum = INT_MIN;
 
         q.push(root);
+        int level = 1;
         while (!q.empty()) {
-            vector<int> vals;
+            int sum = 0;
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+                sum += node->val;
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            if (sum > mxsum) ans = level;
+            mxsum = max(sum, mxsum);
+            level++;
         }
 
         return ans;

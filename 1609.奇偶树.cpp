@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=1609 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [1609] 奇偶树
  */
 
 // @lc code=start
@@ -18,29 +18,38 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (root == nullptr) return {};
+    bool isEvenOddTree(TreeNode* root) {
+        if (root == nullptr) return false;
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        bool isOdd = false;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            int sz = q.size();
+            int pre = isOdd? INT_MAX: INT_MIN;
+            for (int i = 0; i < sz; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+
+                if (isOdd) {
+                    if (node->val % 2 == 1) return false;
+                    if (node->val >= pre) return false;
+                } else {
+                    if (node->val % 2 == 0) return false;
+                    if (node->val <= pre) return false;
+                }
+
+                pre = node->val;
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            isOdd = !isOdd;
         }
 
-        return ans;
+        return true;
     }
 };
 // @lc code=end

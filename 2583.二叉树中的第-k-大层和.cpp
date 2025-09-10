@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=2583 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [2583] 二叉树中的第 K 大层和
  */
 
 // @lc code=start
@@ -18,29 +18,32 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (root == nullptr) return {};
+    long long kthLargestLevelSum(TreeNode* root, int k) {
+        if (root == nullptr) return 0;
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        vector<long long> sum;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            long long level = 0;
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+
+                level += node->val;
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
-
-            ans.emplace_back(vals);
+            
+            sum.push_back(level);
         }
 
-        return ans;
+        sort(sum.begin(), sum.end());
+        if (sum.size() < k) return -1;
+        return sum[sum.size() - k];
     }
 };
 // @lc code=end

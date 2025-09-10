@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=515 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [515] 在每个树行中找最大值
  */
 
 // @lc code=start
@@ -18,26 +18,26 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<int> largestValues(TreeNode* root) {
         if (root == nullptr) return {};
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        vector<int> ans;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
+            int mx = INT_MIN;
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+                mx = max(mx, node->val);
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            ans.emplace_back(mx);
         }
 
         return ans;

@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=102 lang=cpp
+ * @lc app=leetcode.cn id=637 lang=cpp
  *
- * [102] 二叉树的层序遍历
+ * [637] 二叉树的层平均值
  */
 
 // @lc code=start
@@ -18,26 +18,26 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<double> averageOfLevels(TreeNode* root) {
         if (root == nullptr) return {};
 
         queue<TreeNode*> q;
-        vector<vector<int>> ans;
+        vector<double> ans;
 
         q.push(root);
         while (!q.empty()) {
-            vector<int> vals;
+            double sum = 0;
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 auto node = q.front();
                 q.pop();
-                vals.push_back(node->val);
+                sum += node->val;
 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
 
-            ans.emplace_back(vals);
+            ans.emplace_back(sum / n);
         }
 
         return ans;
