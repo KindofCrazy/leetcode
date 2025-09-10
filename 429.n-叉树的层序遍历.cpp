@@ -1,0 +1,58 @@
+/*
+ * @lc app=leetcode.cn id=429 lang=cpp
+ *
+ * [429] N 叉树的层序遍历
+ */
+
+// @lc code=start
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        if (root == nullptr) return {};
+
+        queue<Node*> q;
+        q.push(root);
+
+        vector<vector<int>> ans;
+        while(!q.empty()) {
+            int sz = q.size();
+            vector<int> level;
+            while (sz--) {
+                auto node = q.front();
+                q.pop();
+
+                level.push_back(node->val);
+                
+                for (auto child: node->children) {
+                    q.push(child);
+                }
+            }
+            
+            ans.emplace_back(level);
+        }
+        
+        return ans;
+    }
+};
+// @lc code=end
+
