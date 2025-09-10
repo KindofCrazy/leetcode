@@ -18,6 +18,7 @@
  */
 class Solution {
 public:
+
     void flatten(TreeNode* root) {
         stack<TreeNode*> stk;
         TreeNode* node = root, *pre = new TreeNode(0, nullptr, root);
