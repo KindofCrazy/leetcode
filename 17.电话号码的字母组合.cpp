@@ -7,37 +7,27 @@
 // @lc code=start
 class Solution {
 public:
-    string s;
+    vector<string> mapping = {"", "", "abc", "def", "ghi", \
+                            "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    
     vector<string> ans;
-    unordered_map<char, string> mp = {
-        {'2', "abc"},
-        {'3', "def"},
-        {'4', "ghi"},
-        {'5', "jkl"},
-        {'6', "mno"},
-        {'7', "pqrs"},
-        {'8', "tuv"},
-        {'9', "wxyz"}
-    };
-
-    void backtrack(string digits, int cur) {
-        if (cur == digits.size()) {
-            ans.push_back(s);
+    string path;
+    void dfs(string digits, int idx) {
+        if (idx == digits.size()) {
+            ans.push_back(path);
             return;
         }
-        
-        for (char c: mp[digits[cur]]) {
-            s.push_back(c);
-            backtrack(digits, cur+1);
-            s.pop_back();
+
+        for (char c: mapping[digits[idx] - '0']) {
+            path.push_back(c);
+            dfs(digits, idx+1);
+            path.pop_back();
         }
     }
 
     vector<string> letterCombinations(string digits) {
-        if (digits.size() == 0) {
-            return {};
-        }
-        backtrack(digits, 0);
+        if (digits.size() == 0) return {};
+        dfs(digits, 0);
         return ans;
     }
 };
