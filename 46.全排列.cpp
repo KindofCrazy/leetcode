@@ -8,21 +8,30 @@
 class Solution {
 public:
 
+    vector<bool> used;
+    vector<int> arr;
     vector<vector<int>> ans;
-    void backtrack(vector<int>& nums, int first) {
-        if (first == nums.size() - 1) {
-            ans.emplace_back(nums);
+
+    void dfs(vector<int>& nums, int idx) {
+        if (idx == nums.size()) {
+            ans.emplace_back(arr);
+            return;
         }
 
-        for (int i = first; i < nums.size(); i++) {
-            swap(nums[first], nums[i]);
-            backtrack(nums, first+1);
-            swap(nums[first], nums[i]);
+        for (int i = 0; i < used.size(); i++) {
+            if (!used[i]) {
+                arr.push_back(nums[i]);
+                used[i] = true;
+                dfs(nums, idx+1);
+                used[i] = false;
+                arr.pop_back();
+            }
         }
     }
 
     vector<vector<int>> permute(vector<int>& nums) {
-        backtrack(nums, 0);
+        used.assign(nums.size(), false);
+        dfs(nums, 0);
         return ans;
     }
 };
