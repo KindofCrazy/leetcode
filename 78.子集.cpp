@@ -9,20 +9,22 @@ class Solution {
 public:
     vector<int> set;
     vector<vector<int>> ans;
-    void backtrack(vector<int>& nums, int cur) {
-        if(cur == nums.size()) {
-            ans.emplace_back(set);
+    
+    void dfs(vector<int>& nums, int idx) {
+        if (idx == nums.size()) {
+            ans.push_back(set);
             return;
         }
-    
-        set.push_back(nums[cur]);
-        backtrack(nums, cur+1);
+
+        dfs(nums, idx+1);
+
+        set.push_back(nums[idx]);
+        dfs(nums, idx+1);
         set.pop_back();
-        backtrack(nums, cur+1);
     }
 
     vector<vector<int>> subsets(vector<int>& nums) {
-        backtrack(nums, 0);
+        dfs(nums, 0);
         return ans;
     }
 };
