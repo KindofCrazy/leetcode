@@ -7,23 +7,29 @@
 // @lc code=start
 class Solution {
 public:
+
+    int rob(vector<int>& nums) {
+        int first = nums[0], second = max(nums[0], nums[1]);
+        for (int i = 2; i < nums.size(); i++) {
+            int tmp = max(first + nums[i], second);
+            first = second;
+            second = tmp;
+        }
+
+        return second;
+    }
+
     int deleteAndEarn(vector<int>& nums) {
         int maxVal = 0;
-        
-        vector<int> score(1e4+5, 0);
         for (int n: nums) {
-            score[n] += n;
             maxVal = max(n, maxVal);
         }
 
-        vector<int> dp(1e4+5, 0);
-        int ans = 0;
-        dp[1] = score[1];
-        dp[2] = max(score[1], score[2]);
-        for (int i = 2; i <= maxVal; i++) {
-            dp[i] = max(dp[i-2]+score[i], dp[i-1]);
+        vector<int> sum(maxVal+1);
+        for (int n: nums) {
+            sum[n] += n;
         }
-        return dp[maxVal];
+        return rob(sum);
     }
 };
 // @lc code=end
