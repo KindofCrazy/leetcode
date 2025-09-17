@@ -8,20 +8,16 @@
 class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
-        vector<vector<int>> dp;
-        int layer = triangle.size();
-        vector<int> first = {triangle[0][0]};
-        dp.emplace_back(first);
-        for (int i = 1; i < layer; i++) {
-            vector<int> temp;
-            temp.push_back(dp[i-1][0] + triangle[i][0]);
+        int m = triangle.size();
+        for (int i = 1; i < m; i++) {
+            triangle[i][0] = triangle[i-1][0] + triangle[i][0];
             for (int j = 1; j < i; j++) {
-                temp.push_back(min(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j]);
+                triangle[i][j] = min(triangle[i-1][j-1], triangle[i-1][j]) + triangle[i][j];
             }
-            temp.push_back(dp[i-1][i-1] + triangle[i][i]);
-            dp.push_back(temp);
+            triangle[i][i] = triangle[i-1][i-1] + triangle[i][i];
         }
-        return *min_element(dp.back().begin(), dp.back().end());
+
+        return *min_element(triangle.back().begin(), triangle.back().end());
     }
 };
 // @lc code=end

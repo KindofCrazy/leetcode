@@ -9,21 +9,15 @@ class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int n = matrix.size();
-        vector<vector<int>> dp(n ,vector<int>(n));
-
-        for (int col = 0; col < n; col++) {
-            dp[0][col] = matrix[0][col];
-        }
-
-        for (int row = 1; row < n; row++) {
-            dp[row][0] = min(dp[row-1][0], dp[row-1][1]) + matrix[row][0];
-            for (int col = 1; col < n - 1; col++) {
-                dp[row][col] = min(dp[row-1][col-1], dp[row-1][col]);
-                dp[row][col] = min(dp[row][col], dp[row-1][col+1]) + matrix[row][col];
+        for (int i = 1; i < n; i++) {
+            matrix[i][0] = min(matrix[i-1][0], matrix[i-1][1]) + matrix[i][0];
+            for (int j = 1; j < n-1; j++) {
+                matrix[i][j] = min({matrix[i-1][j-1], matrix[i-1][j], matrix[i-1][j+1]}) + matrix[i][j];
             }
-            dp[row][n-1] = min(dp[row-1][n-2], dp[row-1][n-1]) + matrix[row][n-1];
+            matrix[i][n-1] = min({matrix[i-1][n-2], matrix[i-1][n-1]}) + matrix[i][n-1];
         }
-        return *min_element(dp.back().begin(), dp.back().end());
+
+        return ranges::min(matrix.back());
     }
 };
 // @lc code=end
