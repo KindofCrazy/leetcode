@@ -4,21 +4,21 @@
  * [1] 两数之和
  */
 
-#include <vector>
-using namespace std;
 // @lc code=start
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> idx;
+        unordered_map<int, int> mp;
         for (int i = 0; i < nums.size(); i++) {
-            if (idx.count(target - nums[i])) {
-                return {idx[target - nums[i]], i};
+            if (mp.count(target - nums[i])) {
+                return {mp[target - nums[i]], i};
             }
-            idx[nums[i]] = i;
+
+            mp[nums[i]] = i;
         }
 
         return {0, 0};
+
     }
 };
 // @lc code=end
