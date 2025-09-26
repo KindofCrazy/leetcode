@@ -19,7 +19,7 @@
 class Solution {
 public:
 
-    /* TODO 置换环 */
+    /* TODO: 置换环 */
     int op(vector<int> arr) {
         auto nums = arr;
         sort(nums.begin(), nums.end());
