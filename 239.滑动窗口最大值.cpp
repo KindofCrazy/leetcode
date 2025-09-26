@@ -11,16 +11,17 @@ public:
         int n = nums.size();
 
         priority_queue<pair<int, int>> pq;
-        vector<int> ans;
-        for (int i = 0; i < k -1; i++) {
-            pq.emplace(nums[i], i);
+        for (int i = 0; i < k-1; i++) {
+            pq.push({nums[i], i});
         }
-        for (int left = 0; left <= n - k; left++) {
-            int right = left+k-1;
-            pq.emplace(nums[right], right);
-            while(pq.top().second < left) {
+
+        vector<int> ans;
+        for (int i = k-1; i < n; i++) {
+            pq.push({nums[i], i});
+            while (pq.top().second < i-k+1) {
                 pq.pop();
             }
+
             ans.push_back(pq.top().first);
         }
 
