@@ -7,8 +7,7 @@
 // @lc code=start
 class Solution {
 public:
-    vector<int> scount = vector<int>(26);
-    vector<int> pcount = vector<int>(26);
+    vector<int> scount, pcount;
 
     bool check() {
         for (int i = 0; i < 26; i++) {
@@ -19,20 +18,24 @@ public:
 
 
     vector<int> findAnagrams(string s, string p) {
+        scount.assign(26, 0);
+        pcount.assign(26, 0);
         int slen = s.size(), plen = p.size();
+        for (char c: p) {
+            pcount[c-'a']++;
+        }
 
-        for (int i = 0; i < plen; i++) {
-            pcount[p[i]-'a']++;
-            if (i < plen-1 && i < slen) scount[s[i]-'a']++;
+        for (int i = 0; i < plen-1 && i < slen; i++) {
+            scount[s[i]-'a']++;
         }
 
         vector<int> ans;
-        for (int left = 0; left <= slen-plen; left++) {
-            int right = left + plen - 1;
-            scount[s[right]-'a']++;
-            if (check()) ans.push_back(left);
-            scount[s[left]-'a']--;
+        for (int i = 0; i <= slen-plen; i++) {
+            scount[s[i+plen-1]-'a']++;
+            if (check()) ans.push_back(i);
+            scount[s[i]-'a']--;
         }
+
         return ans;
     }
 };

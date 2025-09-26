@@ -12,12 +12,13 @@ public:
         unordered_set<char> occ;
 
         int ans = 0;
-        for (int left = 0, right = 0; right < n; left++) {
-            while (!occ.count(s[right]) && right < n) {
-                occ.insert(s[right++]);
+        for (int left = 0, right = 0; right < n; right++) {
+            while (occ.contains(s[right])) {
+                occ.erase(s[left++]);
             }
-            ans = max(ans, right - left);
-            occ.erase(s[left]);
+
+            occ.insert(s[right]);
+            ans = max(ans, right - left + 1);
         }
 
         return ans;
