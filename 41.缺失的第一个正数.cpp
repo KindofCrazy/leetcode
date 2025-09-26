@@ -9,25 +9,27 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
-        
+
         for (int i = 0; i < n; i++) {
             if (nums[i] <= 0 || nums[i] > n) {
-                nums[i] = n + 1;
+                nums[i] = n+1;
             }
         }
 
         for (int i = 0; i < n; i++) {
-            int val = abs(nums[i]);
-            if (val > 0 && val <= n && nums[val-1] > 0) {
-                nums[val-1] = -nums[val-1];
-            }   
+            int key = abs(nums[i]);
+            if (key > 0 && key <= n) {
+                nums[key-1] = -abs(nums[key-1]);
+            }
         }
 
+        int ans = 0;
         for (int i = 0; i < n; i++) {
             if (nums[i] > 0) {
                 return i+1;
             }
         }
+
         return n+1;
     }
 };

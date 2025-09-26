@@ -10,12 +10,12 @@ public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>> ans;
         sort(intervals.begin(), intervals.end());
-        for (int i = 0; i < intervals.size(); i++) {
-            int l = intervals[i][0], r = intervals[i][1];
-            if (ans.size() == 0 || l > ans.back()[1]) {
-                ans.emplace_back(intervals[i]);
+
+        for (auto &interval: intervals) {
+            if (ans.empty() || interval[0] > ans.back()[1]) {
+                ans.emplace_back(interval);
             } else {
-                ans.back()[1] = max(ans.back()[1], r);
+                ans.back()[1] = max(ans.back()[1], interval[1]);
             }
         }
 

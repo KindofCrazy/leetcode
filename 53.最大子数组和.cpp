@@ -8,11 +8,14 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int pre = 0, ans = nums[0];
+        int n = nums.size();
+        int ans = INT_MIN, pre = 0;
+
         for (int n: nums) {
             pre = max(n, pre+n);
             ans = max(ans, pre);
         }
+
         return ans;
     }
 };
