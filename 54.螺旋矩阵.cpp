@@ -8,28 +8,29 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        if (matrix.size() == 0 || matrix[0].size() == 0) return {};
-        
-        int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        int rows = matrix.size(), cols = matrix[0].size();
+        int m = matrix.size(), n = matrix[0].size();
 
+        vector<vector<int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+        int count = 0, row = 0, col = 0, dir = 0;
+        int top = 0, bottom = m-1, left = 0, right = n-1;
         vector<int> ans;
-        vector<vector<bool>> visited(rows, vector<bool>(cols));
-        int count = 0;
-
-        int row = 0, col = 0;
-        int directionIndex = 0;
-        while(count < rows*cols) {
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        while (count < m * n) {
             ans.push_back(matrix[row][col]);
             visited[row][col] = true;
             count++;
-            int nextRow = row + directions[directionIndex][0], nextCol = col + directions[directionIndex][1];
-            if (nextRow < 0 || nextRow >= rows || nextCol < 0 || nextCol >= cols || visited[nextRow][nextCol]) {
-                directionIndex = (directionIndex + 1) % 4;
+
+            int nextRow = row + directions[dir][0];
+            int nextCol = col + directions[dir][1];
+            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || visited[nextRow][nextCol]) {
+                dir = (dir + 1) % directions.size();
             }
-            row = row + directions[directionIndex][0];
-            col = col + directions[directionIndex][1];
+
+            row = row + directions[dir][0];
+            col = col + directions[dir][1];
         }
+
         return ans;
     }
 };
