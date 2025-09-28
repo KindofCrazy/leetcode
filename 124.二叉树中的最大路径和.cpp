@@ -21,21 +21,18 @@ public:
     int ans = INT_MIN;
 
     int dfs(TreeNode* root) {
-        if (root == nullptr) return 0;
+        if (!root) return 0;
 
         int left = dfs(root->left), right = dfs(root->right);
-        int sum = root->val, ret = root->val;
-        ret = max(ret, root->val + left);
-        ret = max(ret, root->val + right);
-        sum = max(ret, root->val + left + right);
+        ans = max({ans, root->val, left+root->val, right+root->val, left+right+root->val});
 
-        ans = max(ans, sum);
-
-        return ret;
+        return max({root->val, root->val+left, root->val+right});
     }
+
 
     int maxPathSum(TreeNode* root) {
         dfs(root);
+        
         return ans;
     }
 };

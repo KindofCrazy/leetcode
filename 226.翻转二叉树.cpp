@@ -19,11 +19,14 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        if (root == nullptr) return root;
+        if (!root) return root;
+
         TreeNode* newLeft = invertTree(root->right);
         TreeNode* newRight = invertTree(root->left);
+
         root->left = newLeft;
         root->right = newRight;
+
         return root;
     }
 };

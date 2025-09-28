@@ -19,13 +19,14 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        return isValidBSTHelper(root, LONG_MIN, LONG_MAX);
+        return isValidBSTHelper(root, LLONG_MIN, LLONG_MAX);
     }
 
     bool isValidBSTHelper(TreeNode* root, long long lower, long long upper) {
-        if (root == nullptr) return true;
-        if (root->val <= lower || root->val >= upper) return false;
-        return isValidBSTHelper(root->left, lower, root->val) && isValidBSTHelper(root->right, root->val ,upper);
+        if (!root) return true;
+        if (root->val >= upper || root->val <= lower) return false;
+
+        return isValidBSTHelper(root->left, lower, root->val) && isValidBSTHelper(root->right, root->val, upper);
     }
 };
 // @lc code=end

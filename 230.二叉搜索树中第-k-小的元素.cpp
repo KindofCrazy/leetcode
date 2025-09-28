@@ -20,20 +20,22 @@ class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
         stack<TreeNode*> stk;
-        TreeNode* ptr = root;
-        while(ptr != nullptr || !stk.empty()) {
-            while(ptr != nullptr) {
-                stk.push(ptr);
-                ptr = ptr->left;
+
+        while (root || !stk.empty()) {
+            while (root) {
+                stk.push(root);
+                root = root->left;
             }
 
-            ptr = stk.top();
+            root = stk.top();
             stk.pop();
             k--;
-            if (k == 0) return ptr->val;
-            ptr = ptr->right;
+            if (k == 0) return root->val;
+
+            root = root->right;
         }
-        return -1;
+
+        return 0;
     }
 };
 // @lc code=end

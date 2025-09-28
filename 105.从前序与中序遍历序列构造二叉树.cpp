@@ -22,12 +22,12 @@ public:
 
     TreeNode* build(vector<int>& preorder, vector<int>& inorder, int prel, int prer, int inl, int inr) {
         if (prel > prer || inl > inr) return nullptr;
+        
+        int val = preorder[prel], index = idx[val];
 
-        TreeNode* root = new TreeNode(preorder[prel]);
-        int index = idx[preorder[prel]];
-        root->left = build(preorder, inorder, prel+1, prer, inl, index-1);
+        TreeNode* root = new TreeNode(val);
+        root->left = build(preorder, inorder, prel+1, prel+index-inl, inl, index-1);
         root->right = build(preorder, inorder, prel+index-inl+1, prer, index+1, inr);
-
         return root;
     }
 
@@ -35,7 +35,7 @@ public:
         for (int i = 0; i < inorder.size(); i++) {
             idx[inorder[i]] = i;
         }
-
+        
         return build(preorder, inorder, 0, preorder.size()-1, 0, inorder.size()-1);
     }
 };

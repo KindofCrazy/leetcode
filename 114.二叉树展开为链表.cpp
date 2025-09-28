@@ -20,19 +20,20 @@ class Solution {
 public:
 
     void flatten(TreeNode* root) {
+        if (!root) return;
+        
         stack<TreeNode*> stk;
-        TreeNode* node = root, *pre = new TreeNode(0, nullptr, root);
-        while(node != nullptr || !stk.empty()) {
-            if (node == nullptr) {
-                node = stk.top();
-                stk.pop();
-            }
+        stk.push(root);
 
-            if (node->right != nullptr) stk.push(node->right);
-            pre->right = node;
-            pre->left = nullptr;
-            pre = node;
-            node = node->left;
+        while (!stk.empty()) {
+            TreeNode* node = stk.top();
+            stk.pop();
+
+            if (node->right) stk.push(node->right);
+            if (node->left) stk.push(node->left);
+
+            if (!stk.empty()) node->right = stk.top();
+            node->left = nullptr;
         }
     }
 };

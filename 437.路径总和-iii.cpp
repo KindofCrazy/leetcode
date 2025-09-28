@@ -17,26 +17,25 @@
  * };
  */
 class Solution {
-    public:
-    int ret = 0;
-    void rootSum(TreeNode* root, long targetSum) {
-        if (root == nullptr) {
-            return;
-        }
-        if (root->val == targetSum) {
-            ret += 1;
-        }
+public:
+    int ans = 0;
+    
+    void rootSum(TreeNode* root, long long target) {
+        if (!root) return;
+        if (root->val == target) ans++;
 
-        rootSum(root->left, targetSum - root->val);
-        rootSum(root->right, targetSum - root->val);
+        rootSum(root->left, target - root->val);
+        rootSum(root->right, target - root->val);
     }
+
     int pathSum(TreeNode* root, int targetSum) {
-        if (root == nullptr) return ret;
+        if (!root) return 0;
+        
         rootSum(root, targetSum);
         pathSum(root->left, targetSum);
         pathSum(root->right, targetSum);
 
-        return ret;
+        return ans;
     }
 };
 // @lc code=end

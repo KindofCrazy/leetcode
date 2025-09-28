@@ -19,17 +19,16 @@
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
-        if (root == nullptr) return true;
+        if (!root) return true;
         return isSymmetricHelper(root->left, root->right);
     }
 
     bool isSymmetricHelper(TreeNode* left, TreeNode* right) {
-        if (left == nullptr && right == nullptr) return true;
-        if (left == nullptr && right != nullptr) return false;
-        if (left != nullptr && right == nullptr) return false;
-        if (left->val != right->val) return false;
+        if (!left && !right) return true;
+        if (!left && right) return false;
+        if (left && !right) return false;
 
-        return isSymmetricHelper(left->left, right->right) && isSymmetricHelper(left->right, right->left);
+        return left->val == right->val && isSymmetricHelper(left->left, right->right) && isSymmetricHelper(left->right, right->left);
     }
 };
 // @lc code=end

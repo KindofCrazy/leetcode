@@ -18,18 +18,21 @@
  */
 class Solution {
 public:
+    int ans = 0;
+
     int diameterOfBinaryTree(TreeNode* root) {
-        int ans = 0;
-        maxLength(root, ans); 
+        maxLength(root);
+
         return ans;
     }
 
-    int maxLength(TreeNode* root, int& ans) {
-        if (root == nullptr) return -1;
-        int leftLength = maxLength(root->left, ans) + 1;
-        int rightLength = maxLength(root->right, ans) + 1;
-        ans = max(ans, leftLength+rightLength);
-        return max(leftLength, rightLength);
+    int maxLength(TreeNode* root) {
+        if (!root) return 0;
+
+        int left = maxLength(root->left), right = maxLength(root->right);
+        ans = max(ans, left+right);
+
+        return max(left, right) + 1;
     }
 };
 // @lc code=end
