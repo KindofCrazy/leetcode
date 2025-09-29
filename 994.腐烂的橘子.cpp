@@ -9,40 +9,47 @@ class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
+        vector<pair<int,int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-        vector<vector<int>> dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-        int num = 0, cnt = 0;
         queue<pair<int, int>> q;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 2) q.emplace(i, j);
-                if (grid[i][j] == 1) num++;
+                if (grid[i][j] == 2) {
+                    q.emplace(i, j);
+                }
             }
         }
 
         int ans = 0;
         while (!q.empty()) {
             int sz = q.size();
-            while(sz--) {
+            
+            while (sz--) {
                 auto [x, y] = q.front();
                 q.pop();
 
-                for (int k = 0; k < dir.size(); k++) {
-                    int nx = x + dir[k][0], ny = y + dir[k][1];
-                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] == 1) {
-                        grid[nx][ny] = 2;
-                        q.emplace(nx, ny);
-                        cnt++;
+                for (auto& [dirx, diry]: directions) {
+                    int newx = x + dirx, newy = y + diry;
+                    if (newx < 0 || newx >= m || newy < 0 || newy >= n || grid[newx][newy] != 1) {
+                        continue;
                     }
+
+                    q.emplace(newx, newy);
+                    grid[newx][newy] = 2;
                 }
             }
 
             ans += !q.empty();
         }
 
-        if (cnt == num) return ans;
-        return -1;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) return -1;
+            }
+        }
+
+        return ans;
     }
 };
 // @lc code=end

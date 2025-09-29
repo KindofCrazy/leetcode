@@ -11,32 +11,35 @@ private:
     vector<int> visited;
     bool valid = true;
 
-    void dfs(int u) {
-        visited[u] = 1;
-        for (int v: edges[u]) {
-            if (visited[v] == 0) {
-                dfs(v);
+    void dfs(int i) {
+        visited[i] = 1;
+        for (int j: edges[i]) {
+            if (visited[j] == 0) {
+                dfs(j);
                 if (!valid) {
                     return;
                 }
-            } else if (visited[v] == 1) {
+            } else if (visited[j] == 1) {
                 valid = false;
                 return;
             }
         }
 
-        visited[u] = 2;
+        visited[i] = 2;
     }
+
+
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         edges.resize(numCourses);
-        visited.resize(numCourses);
-        for (auto info: prerequisites) {
-            edges[info[1]].push_back(info[0]);
+        visited.resize(numCourses, 0);
+
+        for (auto& info: prerequisites) {
+            edges[info[0]].push_back(info[1]);
         }
-        
-        for (int i = 0; i < numCourses && valid; i++) {
-            if (visited[i] == 0) dfs(i);
+
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] != 2 && valid) dfs(i);
         }
 
         return valid;
