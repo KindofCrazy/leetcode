@@ -7,7 +7,6 @@
 // @lc code=start
 class Solution {
 public:
-
     vector<bool> used;
     vector<int> arr;
     vector<vector<int>> ans;
@@ -18,13 +17,15 @@ public:
             return;
         }
 
-        for (int i = 0; i < used.size(); i++) {
+        for (int i = 0; i < nums.size(); i++) {
             if (!used[i]) {
-                arr.push_back(nums[i]);
                 used[i] = true;
+                arr.push_back(nums[i]);
+                
                 dfs(nums, idx+1);
-                used[i] = false;
+                
                 arr.pop_back();
+                used[i] = false;
             }
         }
     }
@@ -32,6 +33,7 @@ public:
     vector<vector<int>> permute(vector<int>& nums) {
         used.assign(nums.size(), false);
         dfs(nums, 0);
+
         return ans;
     }
 };

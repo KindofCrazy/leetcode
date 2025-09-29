@@ -7,28 +7,27 @@
 // @lc code=start
 class Solution {
 public:
-
-    vector<int> comb;
+    vector<int> path;
     vector<vector<int>> ans;
-    void backtrack(vector<int>& candiates, int target, int index) {
+
+    void dfs(vector<int>& candidates, int target, int idx) {
         if (target == 0) {
-            ans.push_back(comb);
+            ans.emplace_back(path);
+            return;
+        } else if (target < 0 || idx == candidates.size()) {
             return;
         }
 
-        if (target < 0) {
-            return;
-        }
+        dfs(candidates, target, idx+1);
 
-        for (int i = index; i < candiates.size(); i++) {
-            comb.push_back(candiates[i]);
-            backtrack(candiates, target - candiates[i], i);
-            comb.pop_back();
-        }
+        path.push_back(candidates[idx]);
+        dfs(candidates, target-candidates[idx], idx);
+        path.pop_back();
     }
 
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        backtrack(candidates, target, 0);
+        dfs(candidates, target, 0);
+
         return ans;
     }
 };

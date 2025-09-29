@@ -17,10 +17,12 @@ public:
         }
 
         for (int end = idx; end < s.size(); end++) {
-            string t = s.substr(idx, end-idx+1), a = t;
-            reverse(a.begin(), a.end());
-            if (a == t) {
-                sub.emplace_back(t);
+            string ss = s.substr(idx, end-idx+1);
+            string fs = ss;
+            reverse(fs.begin(), fs.end());
+
+            if (ss == fs) {
+                sub.emplace_back(ss);
                 dfs(s, end+1);
                 sub.pop_back();
             }
@@ -29,6 +31,7 @@ public:
 
     vector<vector<string>> partition(string s) {
         dfs(s, 0);
+
         return ans;
     }
 };

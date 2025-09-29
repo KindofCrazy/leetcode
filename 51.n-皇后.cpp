@@ -7,46 +7,48 @@
 // @lc code=start
 class Solution {
 public:
-    vector<int> columns;
-    unordered_set<int> occColumns, occDiag1, occDiag2;
+
+    vector<int> cols;
+    unordered_set<int> occCols, occDiag1, occDiag2;
     vector<vector<string>> ans;
 
-    void dfs(int n, int idx) {
-        if (idx == n) {
-            ans.push_back(generate());
+    void dfs(int n, int r) {
+        if (r == n) {
+            ans.emplace_back(generate());
             return;
         }
 
-        int row = idx;
-        for (int col = 0; col < n; col++) {
-            if (!occColumns.count(col) && !occDiag1.count(row+col) && !occDiag2.count(row-col)) {
-                columns.push_back(col);
-                occColumns.insert(col);
-                occDiag1.insert(row+col);
-                occDiag2.insert(row-col);
+        for (int c = 0; c < n; c++) {
+            if (!occCols.count(c) && !occDiag1.count(r+c) && !occDiag2.count(r-c)) {
+                occCols.insert(c);
+                occDiag1.insert(r+c);
+                occDiag2.insert(r-c);
+                cols.push_back(c);
 
-                dfs(n, idx+1);
-
-                columns.pop_back();
-                occColumns.erase(col);
-                occDiag1.erase(row+col);
-                occDiag2.erase(row-col);
+                dfs(n, r+1);
+                
+                cols.pop_back();
+                occCols.erase(c);
+                occDiag1.erase(r+c);
+                occDiag2.erase(r-c);
             }
         }
     }
 
     vector<string> generate() {
         vector<string> board;
-        for (int i = 0; i < columns.size(); i++) {
-            string row = string(columns.size(), '.');
-            row[columns[i]] = 'Q';
+        for (int i = 0; i < cols.size(); i++) {
+            string row(cols.size(), '.');
+            row[cols[i]] = 'Q';
             board.emplace_back(row);
         }
+
         return board;
     }
 
     vector<vector<string>> solveNQueens(int n) {
         dfs(n, 0);
+
         return ans;
     }
 };

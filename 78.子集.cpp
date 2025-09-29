@@ -9,10 +9,10 @@ class Solution {
 public:
     vector<int> set;
     vector<vector<int>> ans;
-    
+
     void dfs(vector<int>& nums, int idx) {
         if (idx == nums.size()) {
-            ans.push_back(set);
+            ans.emplace_back(set);
             return;
         }
 
