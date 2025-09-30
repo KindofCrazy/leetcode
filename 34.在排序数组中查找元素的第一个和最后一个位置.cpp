@@ -8,9 +8,11 @@
 class Solution {
 public:
     int binarySearch(vector<int>& nums, int target) {
-        int n = nums.size(), left = 0, right = n - 1;
+        int left = 0, right = nums.size() - 1;
+
         while (left <= right) {
             int mid = left + ((right - left) >> 1);
+
             if (nums[mid] >= target) {
                 right = mid - 1;
             } else {
@@ -23,12 +25,10 @@ public:
 
     vector<int> searchRange(vector<int>& nums, int target) {
         int start = binarySearch(nums, target);
-        if (start == nums.size() || nums[start] != target) {
-            return {-1, -1};
-        }
+        if (start == nums.size() || nums[start] != target) return {-1, -1};
 
-        int end = binarySearch(nums, target + 1) - 1;
-        return {start, end};
+        int end = binarySearch(nums, target + 1);
+        return {start, end-1};
     }
 };
 // @lc code=end
