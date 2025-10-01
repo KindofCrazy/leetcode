@@ -10,18 +10,17 @@ public:
     bool isValid(string s) {
         stack<char> stk;
         unordered_map<char, char> mp = {
-            {')', '('},
-            {']', '['},
-            {'}', '{'}
+            {'(', ')'},
+            {'[', ']'},
+            {'{', '}'}
         };
 
         for (char c: s) {
-            if (!mp.count(c)) {
+            if (c == '(' || c == '[' || c == '{') {
                 stk.push(c);
             } else {
-                if (stk.empty()) return false;
-                if (mp[c] != stk.top()) return false;
-                else stk.pop();
+                if (stk.empty() || c != mp[stk.top()]) return false;
+                stk.pop();
             }
         }
 
