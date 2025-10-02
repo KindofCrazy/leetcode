@@ -7,34 +7,25 @@
 // @lc code=start
 class Solution {
 public:
-    static bool cmp(pair<int, int>& m, pair<int, int>& n) {
-        return m.second > n.second;
-    }
-
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int, int> occ;
-        for (auto& v: nums) {
-            occ[v]++;
+        unordered_map<int, int> freq;
+        for (int n: nums) {
+            freq[n]++;
         }
 
-        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
-        for (auto& [num, count]: occ) {
-            if (q.size() == k) {
-                if (q.top().second < count) {
-                    q.pop();
-                    q.emplace(num, count);
-                }
-            } else {
-                q.emplace(num, count);
-            }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+        for (auto& [n, f]: freq) {
+            pq.push({f, n});
+            if (pq.size() > k) pq.pop();
         }
 
-        vector<int> ret;
-        while(!q.empty()) {
-            ret.emplace_back(q.top().first);
-            q.pop();
+        vector<int> ans;
+        while (!pq.empty()) {
+            ans.push_back(pq.top().second);
+            pq.pop();
         }
-        return ret;
+
+        return ans;
     }
 };
 // @lc code=end
