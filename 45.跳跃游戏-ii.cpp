@@ -8,16 +8,18 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int step = 0, end = 0, maxPos = 0, n = nums.size();
-        for (int i = 0; i < n - 1; i++) {
-            maxPos = max(maxPos, i+nums[i]);
-            if (i == end) {
-                end = maxPos;
-                step++;
+        int ans = 0, rightMost = 0, stepMost = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > stepMost) {
+                ans++;
+                stepMost = rightMost;
             }
+
+            rightMost = max(rightMost, i+nums[i]);
         }
 
-        return step;
+        return ans;
     } 
 };
 // @lc code=end

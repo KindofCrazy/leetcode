@@ -8,18 +8,15 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        int n = s.size();
-        
         vector<int> last(26);
-        for (int i = 0; i < n; i++) {
-            char c = s.at(i);
+        for (int i = 0; i < s.size(); i++) {
+            char c = s[i];
             last[c-'a'] = max(last[c-'a'], i);
         }
 
-        vector<int> ans;
-        int length = 1;
         int start = 0, end = 0;
-        for (int i = 0; i < n; i++) {
+        vector<int> ans;
+        for (int i = 0; i < s.size(); i++) {
             end = max(end, last[s[i]-'a']);
             if (i == end) {
                 ans.push_back(end-start+1);
