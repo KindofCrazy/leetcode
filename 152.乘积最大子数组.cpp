@@ -9,11 +9,12 @@ class Solution {
 public:
     int maxProduct(vector<int>& nums) {
         int n = nums.size();
-        int maxVal = 1, minVal = 1, ans = INT_MIN;
+
+        int ans = INT_MIN, maxVal = 1, minVal = 1;
         for (int n: nums) {
-            int tmp = maxVal;
-            maxVal = max({n, maxVal*n, minVal*n});
-            minVal = min({n, tmp*n, minVal*n});
+            int tmpMax = maxVal, tmpMin = minVal;
+            maxVal = max({n, tmpMax*n, tmpMin*n});
+            minVal = min({n, tmpMax*n, tmpMin*n});
             ans = max(ans, maxVal);
         }
 
@@ -21,4 +22,3 @@ public:
     }
 };
 // @lc code=end
-
