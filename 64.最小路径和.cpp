@@ -1,4 +1,4 @@
-/*
+;/*
  * @lc app=leetcode.cn id=64 lang=cpp
  *
  * [64] 最小路径和
@@ -9,7 +9,7 @@ class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
-        vector<vector<int>>dp(m, vector<int>(n, 0));
+        vector<vector<int>> dp(m, vector<int>(n, 0));
 
         dp[0][0] = grid[0][0];
         for (int i = 1; i < m; i++) {
@@ -18,7 +18,6 @@ public:
         for (int j = 1; j < n; j++) {
             dp[0][j] = dp[0][j-1] + grid[0][j];
         }
-
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j];

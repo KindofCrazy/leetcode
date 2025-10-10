@@ -9,23 +9,33 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         int n = s.size();
-        vector<vector<bool>> dp(n, vector<bool>(n+1));
+        vector<vector<bool>> dp(n, vector<bool>(n, false));
 
+        int ansBegin = 0, ansLen = 0;
         for (int i = 0; i < n; i++) {
-            dp[i][1] = true;
-            dp[i][0] = true;
+            dp[i][i] = true;
+            ansLen = 1;
         }
+        for (int l = 2; l <= n; l++) {
+            for (int begin = 0; begin < n; begin++) {
+                int end = begin + l - 1;
+                if (end >= n) {
+                    break;
+                }
 
-        int ansBegin = 0;
-        int ansLen = 1;
-        for (int len = 2; len <= n; len++) {
-            for (int begin = 0; begin+len-1 < n; begin++) {
-                if (s[begin] == s[begin+len-1] && dp[begin+1][len-2] == true) {
-                    dp[begin][len] = true;
-                    if (len > ansLen) {
-                        ansBegin = begin;
-                        ansLen = len;
+                if (s[begin] != s[end]) {
+                    dp[begin][end] = false;
+                } else {
+                    if (l == 2) {
+                        dp[begin][end] = true;
+                    } else {
+                        dp[begin][end] = dp[begin+1][end-1];
                     }
+                }
+
+                if (dp[begin][end] && l > ansLen) {
+                    ansBegin = begin;
+                    ansLen = l;
                 }
             }
         }
