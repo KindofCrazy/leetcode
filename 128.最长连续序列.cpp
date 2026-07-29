@@ -9,16 +9,16 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         unordered_set<int> s;
-        
         for (int n: nums) {
             s.insert(n);
         }
 
         int ans = 0;
         for (int n: s) {
-            if (s.count(n-1)) continue;
+            if (s.count(n+1)) continue;
+
             int l = 0;
-            while(s.count(n++)) {
+            while (s.count(n--)) {
                 l++;
             }
 
