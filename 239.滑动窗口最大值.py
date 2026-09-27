@@ -4,6 +4,7 @@
 # [239] 滑动窗口最大值
 #
 
+
 # @lc code=start
 class Solution(object):
     def maxSlidingWindow(self, nums, k):
@@ -15,18 +16,18 @@ class Solution(object):
         q = deque()
         ans = []
 
-        for right in range(len(nums)):
-            while q and nums[q[-1]] <= nums[right]:
+        for i, v in enumerate(nums):
+            while q and q[-1][1] < v:
                 q.pop()
 
-            q.append(right)
+            q.append([i, v])
 
-            while q[0] <= right - k:
-                q.popleft()
-
-            if right >= k-1:
-                ans.append(nums[q[0]])
+            if i >= k - 1:
+                while q[0][0] <= i - k:
+                    q.popleft()
+                ans.append(q[0][1])
 
         return ans
-# @lc code=end
 
+
+# @lc code=end

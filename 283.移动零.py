@@ -4,6 +4,7 @@
 # [283] 移动零
 #
 
+
 # @lc code=start
 class Solution(object):
     def moveZeroes(self, nums):
@@ -16,7 +17,7 @@ class Solution(object):
             if nums[right] != 0:
                 nums[left], nums[right] = nums[right], nums[left]
                 left += 1
-
             right += 1
-# @lc code=end
 
+
+# @lc code=end

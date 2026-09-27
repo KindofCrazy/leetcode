@@ -4,6 +4,7 @@
 # [438] 找到字符串中所有字母异位词
 #
 
+
 # @lc code=start
 class Solution(object):
     def findAnagrams(self, s, p):
@@ -12,28 +13,25 @@ class Solution(object):
         :type p: str
         :rtype: List[int]
         """
-        
         scount, pcount = {}, {}
         for c in p:
             pcount[c] = pcount.get(c, 0) + 1
 
-        slen, plen = len(s), len(p)
-        if plen > slen:
-            return []
-
         ans = []
-        for right in range(slen):
-            scount[s[right]] = scount.get(s[right], 0) + 1
 
-            if right >= plen:
-                c = s[right-plen]
-                scount[c] -= 1
-                if scount[c] == 0:
-                    del scount[c]
+        for right in range(len(s)):
+            c = s[right]
+            scount[c] = scount.get(c, 0) + 1
+
+            if right >= len(p):
+                scount[s[right - len(p)]] -= 1
+                if scount[s[right - len(p)]] == 0:
+                    del scount[s[right - len(p)]]
 
             if scount == pcount:
-                ans.append(right-plen+1)
+                ans.append(right - len(p) + 1)
 
         return ans
-# @lc code=end
 
+
+# @lc code=end

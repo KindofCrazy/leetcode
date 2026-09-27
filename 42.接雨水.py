@@ -4,6 +4,7 @@
 # [42] 接雨水
 #
 
+
 # @lc code=start
 class Solution(object):
     def trap(self, height):
@@ -27,5 +28,6 @@ class Solution(object):
                 right -= 1
 
         return ans
-# @lc code=end
 
+
+# @lc code=end

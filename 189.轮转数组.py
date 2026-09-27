@@ -4,6 +4,7 @@
 # [189] 轮转数组
 #
 
+
 # @lc code=start
 class Solution(object):
     def rotate(self, nums, k):
@@ -12,6 +13,19 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        
-# @lc code=end
+        k = k % len(nums)
+        if k == 0:
+            return
 
+        def reverse(nums, left, right):
+            while left < right:
+                nums[left], nums[right] = nums[right], nums[left]
+                left += 1
+                right -= 1
+
+        reverse(nums, 0, len(nums) - 1)
+        reverse(nums, 0, k - 1)
+        reverse(nums, k, len(nums) - 1)
+
+
+# @lc code=end

@@ -4,6 +4,7 @@
 # [3] 无重复字符的最长子串
 #
 
+
 # @lc code=start
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
@@ -11,19 +12,22 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        n = len(s)
-        count = {}
-        left, right, ans = 0, 0, 0
-        while right < n:
-            c = s[right]
-            count[c] = count.get(c, 0) + 1
+        value = dict()
+        left, right = 0, 0
+        ans = 0
 
-            while count[c] > 1:
-                count[s[left]] -= 1
+        for right in range(len(s)):
+            c = s[right]
+            value[c] = value.get(c, 0) + 1
+
+            while left < right and value[c] > 1:
+                value[s[left]] -= 1
                 left += 1
 
-            right += 1
-            ans = max(ans, right - left)
-        return ans
-# @lc code=end
+            ans = max(ans, right - left + 1)
 
+            right += 1
+        return ans
+
+
+# @lc code=end

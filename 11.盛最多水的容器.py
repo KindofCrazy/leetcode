@@ -4,6 +4,7 @@
 # [11] 盛最多水的容器
 #
 
+
 # @lc code=start
 class Solution(object):
     def maxArea(self, height):
@@ -11,19 +12,21 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        def capacity(left, right):
-            return min(height[left], height[right]) * (right - left)
+
+        def capacity(height, left, right):
+            return (right - left) * min(height[left], height[right])
 
         left, right = 0, len(height) - 1
-        ans = 0
-        while left <= right:
-            ans = max(ans, capacity(left, right))
 
-            if height[right] > height[left]:
+        ans = 0
+        while left < right:
+            ans = max(ans, capacity(height, left, right))
+            if height[left] < height[right]:
                 left += 1
             else:
                 right -= 1
 
         return ans
+
 
 # @lc code=end

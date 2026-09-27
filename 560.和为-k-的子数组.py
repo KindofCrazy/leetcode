@@ -4,6 +4,7 @@
 # [560] 和为 K 的子数组
 #
 
+
 # @lc code=start
 class Solution(object):
     def subarraySum(self, nums, k):
@@ -12,15 +13,15 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        prefix, ans = 0, 0
+        prefix = 0
         prefix_count = {0: 1}
+        ans = 0
         for n in nums:
             prefix += n
-            if prefix - k in prefix_count:
-                ans += prefix_count[prefix - k]
-
+            ans += prefix_count.get(prefix - k, 0)
             prefix_count[prefix] = prefix_count.get(prefix, 0) + 1
+
         return ans
 
-# @lc code=end
 
+# @lc code=end

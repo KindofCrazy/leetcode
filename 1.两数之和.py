@@ -4,6 +4,7 @@
 # [1] 两数之和
 #
 
+
 # @lc code=start
 class Solution(object):
     def twoSum(self, nums, target):
@@ -13,10 +14,10 @@ class Solution(object):
         :rtype: List[int]
         """
         hashmap = {}
-        for (i, v) in enumerate(nums):
+        for i, v in enumerate(nums):
             if target - v in hashmap:
                 return [hashmap[target - v], i]
-
             hashmap[v] = i
-# @lc code=end
 
+
+# @lc code=end

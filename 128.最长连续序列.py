@@ -4,6 +4,7 @@
 # [128] 最长连续序列
 #
 
+
 # @lc code=start
 class Solution(object):
     def longestConsecutive(self, nums):
@@ -13,16 +14,17 @@ class Solution(object):
         """
         nums = set(nums)
         ans = 0
-        for n in nums:
-            if n - 1 in nums:
+        for num in nums:
+            if num - 1 in nums:
                 continue
-            length = 1
-            while n + 1 in nums:
-                length += 1
-                n = n + 1
-            ans = max(ans, length)
+            else:
+                len = 0
+                while num in nums:
+                    ans = max(ans, len + 1)
+                    len += 1
+                    num += 1
 
         return ans
 
-# @lc code=end
 
+# @lc code=end
