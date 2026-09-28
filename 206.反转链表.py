@@ -4,6 +4,7 @@
 # [206] 反转链表
 #
 
+
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode(object):
@@ -16,6 +17,18 @@ class Solution(object):
         :type head: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
-        
-# @lc code=end
+        if not head or not head.next:
+            return head
+        prev, cur = None, head
 
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+
+            prev = cur
+            cur = nxt
+
+        return prev
+
+
+# @lc code=end
