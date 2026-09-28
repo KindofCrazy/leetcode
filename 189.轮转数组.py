@@ -14,8 +14,6 @@ class Solution(object):
         :rtype: None Do not return anything, modify nums in-place instead.
         """
         k = k % len(nums)
-        if k == 0:
-            return
 
         def reverse(nums, left, right):
             while left < right:

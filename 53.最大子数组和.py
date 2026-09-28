@@ -12,11 +12,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        prefix, prefix_min, ans = 0, 0, float("-inf")
+        prefix = 0
+        prefixMin = 0
+        ans = float("-inf")
+
         for n in nums:
             prefix += n
-            ans = max(ans, prefix - prefix_min)
-            prefix_min = min(prefix_min, prefix)
+            ans = max(ans, prefix - prefixMin)
+            prefixMin = min(prefixMin, prefix)
+
         return ans
 
 
